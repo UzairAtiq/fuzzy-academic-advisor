@@ -1,0 +1,4 @@
+# Bahria University KRR Assignment #3 - Dependencies
+numpy>=1.25.0
+matplotlib>=3.7.0
+# Tkinter is bundled with standard Python on Windows

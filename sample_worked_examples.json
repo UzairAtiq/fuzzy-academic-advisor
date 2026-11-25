@@ -1,0 +1,363 @@
+[
+  {
+    "id": "EX_01",
+    "title": "BS Student Facing Attendance Shortfall (Medical Absence)",
+    "domain": "Class Attendance & Final Exam Eligibility (Section 1.27)",
+    "scenario": "A 5th-semester BS Computer Science student contracted viral illness mid-semester and missed classes. The recorded attendance is 72.0%. Sickness is not formally exempt as the 25% allowance already caters to sickness (Sec 1.27.1). No official sports/activity makeup tutorial was registered (Score = 0.0).",
+    "inputs": {
+      "Attendance_Pct": 72.0,
+      "Remedial_Makeup_Score": 0.0
+    },
+    "crisp_outputs": {
+      "Debarment_Risk": 68.24,
+      "Exam_Eligibility": 14.89
+    },
+    "linguistic_labels": {
+      "Debarment_Risk": "High_Risk",
+      "Exam_Eligibility": "Ineligible_Barred"
+    },
+    "fired_rules": [
+      {
+        "rule_id": "R_ATT_04",
+        "strength": 0.7273,
+        "description": "IF Attendance is Shortfall Borderline (<75%) AND Makeup is None THEN High Risk AND Ineligible for Final Exam (Sec 1.27.1).",
+        "consequent": [
+          [
+            "Debarment_Risk",
+            "High_Risk"
+          ],
+          [
+            "Exam_Eligibility",
+            "Ineligible_Barred"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "EX_02",
+    "title": "Varsity Athlete with Authorized BUHO Makeup Tutorials",
+    "domain": "Class Attendance & Final Exam Eligibility (Section 1.27)",
+    "scenario": "A student representing Bahria University in HEC National Inter-Varsity Badminton Championship missed multiple contact hours, dropping attendance to 64.0%. However, prior BUHO approval was obtained, and remedial make-up tutorials were successfully certified by faculty (Score = 9.0/10).",
+    "inputs": {
+      "Attendance_Pct": 64.0,
+      "Remedial_Makeup_Score": 9.0
+    },
+    "crisp_outputs": {
+      "Debarment_Risk": 37.64,
+      "Exam_Eligibility": 50.0
+    },
+    "linguistic_labels": {
+      "Debarment_Risk": "Caution_Borderline",
+      "Exam_Eligibility": "Conditional_Tutorial"
+    },
+    "fired_rules": [
+      {
+        "rule_id": "R_ATT_03",
+        "strength": 0.6667,
+        "description": "IF Attendance is Critically Low BUT Makeup is Fully Certified THEN Debarment Risk is Caution AND Exam is Conditional Tutorial (Sec 1.27.2).",
+        "consequent": [
+          [
+            "Debarment_Risk",
+            "Caution_Borderline"
+          ],
+          [
+            "Exam_Eligibility",
+            "Conditional_Tutorial"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "EX_03",
+    "title": "Early Semester Course Drop (Week 1 Add/Drop Window)",
+    "domain": "Course Withdrawal & Fee Adjustment (Section 1.14)",
+    "scenario": "A student discovers severe schedule conflicts between elective courses and formally submits a course withdrawal application on Day 4 of the semester (Week 1).",
+    "inputs": {
+      "Withdrawal_Day": 4.0
+    },
+    "crisp_outputs": {
+      "Transcript_Penalty_Severity": 10.16,
+      "Fee_Refund_Adjustment_Pct": 88.39
+    },
+    "linguistic_labels": {
+      "Transcript_Penalty_Severity": "Clean_No_Record",
+      "Fee_Refund_Adjustment_Pct": "Full_Adjustment_100Pct"
+    },
+    "fired_rules": [
+      {
+        "rule_id": "R_WDL_01",
+        "strength": 1.0,
+        "description": "IF Withdrawal is in Week 1 (Days <=7) THEN Clean Record (No record on transcript) AND Full Fee Adjustment (Sec 1.14.2, 1.14.4).",
+        "consequent": [
+          [
+            "Transcript_Penalty_Severity",
+            "Clean_No_Record"
+          ],
+          [
+            "Fee_Refund_Adjustment_Pct",
+            "Full_Adjustment_100Pct"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "EX_04",
+    "title": "Second-Week Course Withdrawal with Half Fee Adjustment",
+    "domain": "Course Withdrawal & Fee Adjustment (Section 1.14)",
+    "scenario": "A student struggling with heavy academic load decides to drop an extra elective on Day 12 of commencement of semester (within Week 2 and within the 15-day refund window).",
+    "inputs": {
+      "Withdrawal_Day": 12.0
+    },
+    "crisp_outputs": {
+      "Transcript_Penalty_Severity": 10.59,
+      "Fee_Refund_Adjustment_Pct": 48.27
+    },
+    "linguistic_labels": {
+      "Transcript_Penalty_Severity": "Clean_No_Record",
+      "Fee_Refund_Adjustment_Pct": "Half_Adjustment_50Pct"
+    },
+    "fired_rules": [
+      {
+        "rule_id": "R_WDL_02",
+        "strength": 0.7917,
+        "description": "IF Withdrawal is in Week 2 (Days <=15) THEN Clean Record (No record) AND Half Fee Adjustment (Sec 1.14.2, 1.14.4).",
+        "consequent": [
+          [
+            "Transcript_Penalty_Severity",
+            "Clean_No_Record"
+          ],
+          [
+            "Fee_Refund_Adjustment_Pct",
+            "Half_Adjustment_50Pct"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "EX_05",
+    "title": "Mid-Semester Course Withdrawal (Week 6 Transcript 'W' Grade)",
+    "domain": "Course Withdrawal & Fee Adjustment (Section 1.14)",
+    "scenario": "Following poor mid-term test marks, a student requests course withdrawal on Day 40 (Week 6) to safeguard their cumulative GPA from a failing grade.",
+    "inputs": {
+      "Withdrawal_Day": 40.0
+    },
+    "crisp_outputs": {
+      "Transcript_Penalty_Severity": 48.33,
+      "Fee_Refund_Adjustment_Pct": 9.23
+    },
+    "linguistic_labels": {
+      "Transcript_Penalty_Severity": "Recorded_W_Grade",
+      "Fee_Refund_Adjustment_Pct": "No_Adjustment"
+    },
+    "fired_rules": [
+      {
+        "rule_id": "R_WDL_03",
+        "strength": 1.0,
+        "description": "IF Withdrawal is between Week 3 and Week 7 (Days 16-49) THEN Transcript receives 'W' Grade AND No Fee Adjustment (Sec 1.14.3, 1.14.4).",
+        "consequent": [
+          [
+            "Transcript_Penalty_Severity",
+            "Recorded_W_Grade"
+          ],
+          [
+            "Fee_Refund_Adjustment_Pct",
+            "No_Adjustment"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "EX_06",
+    "title": "Late Course Withdrawal Request Post Week 7 (Disallowed)",
+    "domain": "Course Withdrawal & Fee Adjustment (Section 1.14)",
+    "scenario": "A student approaches the HoD on Day 56 (Week 8) requesting to withdraw from a difficult mathematics course, stating sudden personal emergencies.",
+    "inputs": {
+      "Withdrawal_Day": 56.0
+    },
+    "crisp_outputs": {
+      "Transcript_Penalty_Severity": 88.39,
+      "Fee_Refund_Adjustment_Pct": 9.23
+    },
+    "linguistic_labels": {
+      "Transcript_Penalty_Severity": "Disallowed_Withdrawal",
+      "Fee_Refund_Adjustment_Pct": "No_Adjustment"
+    },
+    "fired_rules": [
+      {
+        "rule_id": "R_WDL_04",
+        "strength": 1.0,
+        "description": "IF Withdrawal is after Week 7 (Day >49) THEN Withdrawal Disallowed (Remains Enrolled / Default F) AND No Fee Adjustment (Sec 1.14.3, 1.14.4).",
+        "consequent": [
+          [
+            "Transcript_Penalty_Severity",
+            "Disallowed_Withdrawal"
+          ],
+          [
+            "Fee_Refund_Adjustment_Pct",
+            "No_Adjustment"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "EX_07",
+    "title": "Course Repetition Request for Failed Course with Full Cohort",
+    "domain": "Repeating a Course (Section 1.17)",
+    "scenario": "A student who earned a 'D' grade (GP 1.00) in Data Structures applies to repeat the course in the upcoming semester. A total of 18 students have registered for the repeat section.",
+    "inputs": {
+      "Earned_Course_GPA": 1.0,
+      "Cohort_Enrolled_Size": 18.0
+    },
+    "crisp_outputs": {
+      "Repeat_Permission_Index": 85.34,
+      "CGPA_Improvement_Impact": 87.17
+    },
+    "linguistic_labels": {
+      "Repeat_Permission_Index": "Approved_Permitted",
+      "CGPA_Improvement_Impact": "Maximum_Recovery"
+    },
+    "fired_rules": [
+      {
+        "rule_id": "R_REP_01",
+        "strength": 0.6,
+        "description": "IF Grade is Failing/Low AND Class Size is Full THEN Repeat Approved AND Maximum Recovery Potential (Sec 1.17.1, 1.17.2).",
+        "consequent": [
+          [
+            "Repeat_Permission_Index",
+            "Approved_Permitted"
+          ],
+          [
+            "CGPA_Improvement_Impact",
+            "Maximum_Recovery"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "EX_08",
+    "title": "Course Repetition Ineligibility for Grade 'B' (Exceeding C+ Cap)",
+    "domain": "Repeating a Course (Section 1.17)",
+    "scenario": "An ambitious student who earned a 'B' grade (GP 3.00) wishes to repeat Software Engineering to boost their CGPA to 3.80 for medal eligibility. Class size is 22 students.",
+    "inputs": {
+      "Earned_Course_GPA": 3.0,
+      "Cohort_Enrolled_Size": 22.0
+    },
+    "crisp_outputs": {
+      "Repeat_Permission_Index": 11.61,
+      "CGPA_Improvement_Impact": 14.04
+    },
+    "linguistic_labels": {
+      "Repeat_Permission_Index": "Denied_Ineligible",
+      "CGPA_Improvement_Impact": "Minimal_Gain"
+    },
+    "fired_rules": [
+      {
+        "rule_id": "R_REP_08",
+        "strength": 1.0,
+        "description": "IF Grade is Above C+ (>2.5 GP) THEN Repeat Denied (Ineligible to repeat grade > 2.5) (Sec 1.17.1).",
+        "consequent": [
+          [
+            "Repeat_Permission_Index",
+            "Denied_Ineligible"
+          ],
+          [
+            "CGPA_Improvement_Impact",
+            "Minimal_Gain"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "EX_09",
+    "title": "BS Student on 1st Probation Facing 2nd Consecutive Probation Threat",
+    "domain": "Probation and Drop Rules (Section 5.5)",
+    "scenario": "A BS Computer Science student who was placed on probation last semester obtains a semester CGPA of 1.78 (Deficit Margin = 1.78 - 2.00 = -0.22) with 1 previous probation on record.",
+    "inputs": {
+      "CGPA_Margin": -0.22,
+      "Consecutive_Probations": 1.0
+    },
+    "crisp_outputs": {
+      "Academic_Risk_Severity": 69.39,
+      "Registration_Action_Advisory": 65.52
+    },
+    "linguistic_labels": {
+      "Academic_Risk_Severity": "Probation_Alert",
+      "Registration_Action_Advisory": "Academic_Counseling_Required"
+    },
+    "fired_rules": [
+      {
+        "rule_id": "R_PRB_06",
+        "strength": 0.52,
+        "description": "IF CGPA is Marginal Deficit on 1st Probation THEN 2nd Consecutive Probation Alert (Formal Warning Issued) (Sec 5.5.1, 5.5.2).",
+        "consequent": [
+          [
+            "Academic_Risk_Severity",
+            "Probation_Alert"
+          ],
+          [
+            "Registration_Action_Advisory",
+            "Academic_Counseling_Required"
+          ]
+        ]
+      },
+      {
+        "rule_id": "R_PRB_09",
+        "strength": 0.05,
+        "description": "IF CGPA is Severe Deficit on 1st Probation THEN High Drop Threat AND Principal Approval Mandatory (Sec 5.5.2, 5.5.5).",
+        "consequent": [
+          [
+            "Academic_Risk_Severity",
+            "Severe_Drop_Threat"
+          ],
+          [
+            "Registration_Action_Advisory",
+            "Principal_Approval_Mandatory"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "EX_10",
+    "title": "Probation Recovery & Reset to Zero under Section 5.5.4",
+    "domain": "Probation and Drop Rules (Section 5.5)",
+    "scenario": "An MS student who was on academic probation achieved strong grades in the summer session, raising their CGPA from 2.35 to 2.62 (Deficit Margin = 2.62 - 2.50 = +0.12 relative to MS minimum 2.50).",
+    "inputs": {
+      "CGPA_Margin": 0.12,
+      "Consecutive_Probations": 1.0
+    },
+    "crisp_outputs": {
+      "Academic_Risk_Severity": 13.44,
+      "Registration_Action_Advisory": 89.05
+    },
+    "linguistic_labels": {
+      "Academic_Risk_Severity": "Good_Standing",
+      "Registration_Action_Advisory": "Unrestricted_Registration"
+    },
+    "fired_rules": [
+      {
+        "rule_id": "R_PRB_03",
+        "strength": 0.4194,
+        "description": "IF CGPA >= Minimum after 1 Probation THEN Count Resets to Zero AND Good Standing (Sec 5.5.4 Reset Rule).",
+        "consequent": [
+          [
+            "Academic_Risk_Severity",
+            "Good_Standing"
+          ],
+          [
+            "Registration_Action_Advisory",
+            "Unrestricted_Registration"
+          ]
+        ]
+      }
+    ]
+  }
+]

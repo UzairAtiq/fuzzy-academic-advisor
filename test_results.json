@@ -1,0 +1,794 @@
+{
+  "total": 38,
+  "passed": 34,
+  "failed": 4,
+  "accuracy_pct": 89.47,
+  "test_results": [
+    {
+      "id": "TC_ATT_01",
+      "domain": "Attendance (1.27)",
+      "type": "Normal",
+      "inputs": {
+        "Attendance_Pct": 88.0,
+        "Remedial_Makeup_Score": 0.0
+      },
+      "description": "Regular BS student with 88% attendance and no makeup tutorials.",
+      "expected_handbook": "Eligible for final exam; Safe attendance (>= 75%).",
+      "crisp_outputs": {
+        "Debarment_Risk": 13.91,
+        "Exam_Eligibility": 83.94
+      },
+      "linguistic_labels": {
+        "Debarment_Risk": "Safe",
+        "Exam_Eligibility": "Fully_Eligible"
+      },
+      "fired_rules_count": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_ATT_02",
+      "domain": "Attendance (1.27)",
+      "type": "Normal",
+      "inputs": {
+        "Attendance_Pct": 55.0,
+        "Remedial_Makeup_Score": 0.0
+      },
+      "description": "Severely deficient student with 55% attendance and no makeup.",
+      "expected_handbook": "Debarred from final examination; no condoning allowed.",
+      "crisp_outputs": {
+        "Debarment_Risk": 90.77,
+        "Exam_Eligibility": 14.04
+      },
+      "linguistic_labels": {
+        "Debarment_Risk": "Barred_Critical",
+        "Exam_Eligibility": "Ineligible_Barred"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_ATT_03",
+      "domain": "Attendance (1.27)",
+      "type": "Boundary",
+      "inputs": {
+        "Attendance_Pct": 75.0,
+        "Remedial_Makeup_Score": 0.0
+      },
+      "description": "Exact threshold boundary: Attendance = 75.0%.",
+      "expected_handbook": "Eligible for final exam; minimum 75% met exactly.",
+      "crisp_outputs": {
+        "Debarment_Risk": 61.08,
+        "Exam_Eligibility": 24.24
+      },
+      "linguistic_labels": {
+        "Debarment_Risk": "High_Risk",
+        "Exam_Eligibility": "Ineligible_Barred"
+      },
+      "fired_rules_count": 2,
+      "status": "FAIL"
+    },
+    {
+      "id": "TC_ATT_04",
+      "domain": "Attendance (1.27)",
+      "type": "Boundary",
+      "inputs": {
+        "Attendance_Pct": 74.5,
+        "Remedial_Makeup_Score": 0.0
+      },
+      "description": "Just below threshold: Attendance = 74.5% (shortfall of 0.5%).",
+      "expected_handbook": "Debarred; shortfall cannot be condoned under Section 1.27.1.",
+      "crisp_outputs": {
+        "Debarment_Risk": 68.19,
+        "Exam_Eligibility": 15.09
+      },
+      "linguistic_labels": {
+        "Debarment_Risk": "High_Risk",
+        "Exam_Eligibility": "Ineligible_Barred"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_ATT_05",
+      "domain": "Attendance (1.27)",
+      "type": "Boundary",
+      "inputs": {
+        "Attendance_Pct": 75.5,
+        "Remedial_Makeup_Score": 0.0
+      },
+      "description": "Just above threshold: Attendance = 75.5%.",
+      "expected_handbook": "Eligible; meets minimum 75% contact hours.",
+      "crisp_outputs": {
+        "Debarment_Risk": 52.65,
+        "Exam_Eligibility": 35.85
+      },
+      "linguistic_labels": {
+        "Debarment_Risk": "Caution_Borderline",
+        "Exam_Eligibility": "Conditional_Tutorial"
+      },
+      "fired_rules_count": 2,
+      "status": "FAIL"
+    },
+    {
+      "id": "TC_ATT_06",
+      "domain": "Attendance (1.27)",
+      "type": "Normal (Exception)",
+      "inputs": {
+        "Attendance_Pct": 68.0,
+        "Remedial_Makeup_Score": 9.0
+      },
+      "description": "Student at 68% attendance but has BUHO-approved sports tutorials (Sec 1.27.2).",
+      "expected_handbook": "Conditional / Eligible once makeup tutorials are credited to record.",
+      "crisp_outputs": {
+        "Debarment_Risk": 37.58,
+        "Exam_Eligibility": 50.0
+      },
+      "linguistic_labels": {
+        "Debarment_Risk": "Caution_Borderline",
+        "Exam_Eligibility": "Conditional_Tutorial"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_ATT_07",
+      "domain": "Attendance (1.27)",
+      "type": "Invalid / Out-of-Range",
+      "inputs": {
+        "Attendance_Pct": -15.0,
+        "Remedial_Makeup_Score": 0.0
+      },
+      "description": "Negative attendance value (-15%) entered due to sensor error.",
+      "expected_handbook": "Invalid input; should clamp to 0.0% and evaluate as Barred.",
+      "crisp_outputs": {
+        "Debarment_Risk": 90.77,
+        "Exam_Eligibility": 14.04
+      },
+      "linguistic_labels": {
+        "Debarment_Risk": "Barred_Critical",
+        "Exam_Eligibility": "Ineligible_Barred"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_ATT_08",
+      "domain": "Attendance (1.27)",
+      "type": "Invalid / Out-of-Range",
+      "inputs": {
+        "Attendance_Pct": 135.0,
+        "Remedial_Makeup_Score": 0.0
+      },
+      "description": "Attendance exceeding 100% (135%) entered erroneously.",
+      "expected_handbook": "Invalid input; should clamp to 100.0% and evaluate as Safe/Exemplary.",
+      "crisp_outputs": {
+        "Debarment_Risk": 11.61,
+        "Exam_Eligibility": 86.89
+      },
+      "linguistic_labels": {
+        "Debarment_Risk": "Safe",
+        "Exam_Eligibility": "Fully_Eligible"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_WDL_01",
+      "domain": "Withdrawal (1.14)",
+      "type": "Normal",
+      "inputs": {
+        "Withdrawal_Day": 4.0
+      },
+      "description": "Student withdraws on Day 4 (Week 1).",
+      "expected_handbook": "No record on transcript (Sec 1.14.2) and 100% full fee adjustment (Sec 1.14.4).",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 10.16,
+        "Fee_Refund_Adjustment_Pct": 88.39
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Clean_No_Record",
+        "Fee_Refund_Adjustment_Pct": "Full_Adjustment_100Pct"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_WDL_02",
+      "domain": "Withdrawal (1.14)",
+      "type": "Normal",
+      "inputs": {
+        "Withdrawal_Day": 11.0
+      },
+      "description": "Student withdraws on Day 11 (Week 2, within 15 days).",
+      "expected_handbook": "No record on transcript (Sec 1.14.2) and 50% fee adjustment (Sec 1.14.4).",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 10.16,
+        "Fee_Refund_Adjustment_Pct": 48.33
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Clean_No_Record",
+        "Fee_Refund_Adjustment_Pct": "Half_Adjustment_50Pct"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_WDL_03",
+      "domain": "Withdrawal (1.14)",
+      "type": "Normal",
+      "inputs": {
+        "Withdrawal_Day": 32.0
+      },
+      "description": "Student withdraws on Day 32 (Week 5).",
+      "expected_handbook": "Recorded as 'W' grade on transcript (Sec 1.14.3); No fee adjustment (Sec 1.14.4).",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 48.33,
+        "Fee_Refund_Adjustment_Pct": 9.23
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Recorded_W_Grade",
+        "Fee_Refund_Adjustment_Pct": "No_Adjustment"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_WDL_04",
+      "domain": "Withdrawal (1.14)",
+      "type": "Normal",
+      "inputs": {
+        "Withdrawal_Day": 58.0
+      },
+      "description": "Student attempts to withdraw on Day 58 (Week 9, post Week 7).",
+      "expected_handbook": "Withdrawal disallowed (Sec 1.14.3); No fee adjustment.",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 88.39,
+        "Fee_Refund_Adjustment_Pct": 9.23
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Disallowed_Withdrawal",
+        "Fee_Refund_Adjustment_Pct": "No_Adjustment"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_WDL_05",
+      "domain": "Withdrawal (1.14)",
+      "type": "Boundary",
+      "inputs": {
+        "Withdrawal_Day": 7.0
+      },
+      "description": "Exact Day 7 boundary (End of Week 1).",
+      "expected_handbook": "Full fee adjustment and clean record.",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 11.37,
+        "Fee_Refund_Adjustment_Pct": 73.93
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Clean_No_Record",
+        "Fee_Refund_Adjustment_Pct": "Full_Adjustment_100Pct"
+      },
+      "fired_rules_count": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_WDL_06",
+      "domain": "Withdrawal (1.14)",
+      "type": "Boundary",
+      "inputs": {
+        "Withdrawal_Day": 8.0
+      },
+      "description": "Day 8 (Just into Week 2).",
+      "expected_handbook": "Clean record on transcript; Half fee adjustment.",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 11.64,
+        "Fee_Refund_Adjustment_Pct": 47.89
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Clean_No_Record",
+        "Fee_Refund_Adjustment_Pct": "Half_Adjustment_50Pct"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_WDL_07",
+      "domain": "Withdrawal (1.14)",
+      "type": "Boundary",
+      "inputs": {
+        "Withdrawal_Day": 15.0
+      },
+      "description": "Exact Day 15 boundary (Last day for 50% fee adjustment).",
+      "expected_handbook": "Half fee adjustment; Clean record (end of week 2).",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 31.58,
+        "Fee_Refund_Adjustment_Pct": 40.72
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Recorded_W_Grade",
+        "Fee_Refund_Adjustment_Pct": "Half_Adjustment_50Pct"
+      },
+      "fired_rules_count": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_WDL_08",
+      "domain": "Withdrawal (1.14)",
+      "type": "Boundary",
+      "inputs": {
+        "Withdrawal_Day": 16.0
+      },
+      "description": "Day 16 (First day of Week 3, post day 15).",
+      "expected_handbook": "'W' grade on transcript; Zero fee adjustment.",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 47.82,
+        "Fee_Refund_Adjustment_Pct": 11.46
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Recorded_W_Grade",
+        "Fee_Refund_Adjustment_Pct": "No_Adjustment"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_WDL_09",
+      "domain": "Withdrawal (1.14)",
+      "type": "Boundary",
+      "inputs": {
+        "Withdrawal_Day": 49.0
+      },
+      "description": "Exact Day 49 boundary (End of Week 7, final day to withdraw).",
+      "expected_handbook": "'W' grade allowed; last valid withdrawal day.",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 53.63,
+        "Fee_Refund_Adjustment_Pct": 10.36
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Recorded_W_Grade",
+        "Fee_Refund_Adjustment_Pct": "No_Adjustment"
+      },
+      "fired_rules_count": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_WDL_10",
+      "domain": "Withdrawal (1.14)",
+      "type": "Boundary",
+      "inputs": {
+        "Withdrawal_Day": 50.0
+      },
+      "description": "Day 50 (Start of Week 8, post Week 7 cutoff).",
+      "expected_handbook": "Withdrawal disallowed under Section 1.14.3.",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 68.58,
+        "Fee_Refund_Adjustment_Pct": 10.92
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Recorded_W_Grade",
+        "Fee_Refund_Adjustment_Pct": "No_Adjustment"
+      },
+      "fired_rules_count": 2,
+      "status": "FAIL"
+    },
+    {
+      "id": "TC_WDL_11",
+      "domain": "Withdrawal (1.14)",
+      "type": "Invalid / Out-of-Range",
+      "inputs": {
+        "Withdrawal_Day": -5.0
+      },
+      "description": "Negative timeline input (-5 days).",
+      "expected_handbook": "Invalid; clamp to Day 0 (Clean record, full fee adjustment).",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 10.16,
+        "Fee_Refund_Adjustment_Pct": 88.39
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Clean_No_Record",
+        "Fee_Refund_Adjustment_Pct": "Full_Adjustment_100Pct"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_WDL_12",
+      "domain": "Withdrawal (1.14)",
+      "type": "Invalid / Out-of-Range",
+      "inputs": {
+        "Withdrawal_Day": 120.0
+      },
+      "description": "Days far beyond semester end (120 days).",
+      "expected_handbook": "Invalid/Excessive; clamp to max day (Disallowed, zero refund).",
+      "crisp_outputs": {
+        "Transcript_Penalty_Severity": 88.39,
+        "Fee_Refund_Adjustment_Pct": 9.23
+      },
+      "linguistic_labels": {
+        "Transcript_Penalty_Severity": "Disallowed_Withdrawal",
+        "Fee_Refund_Adjustment_Pct": "No_Adjustment"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_REP_01",
+      "domain": "Course Repeat (1.17)",
+      "type": "Normal",
+      "inputs": {
+        "Earned_Course_GPA": 1.0,
+        "Cohort_Enrolled_Size": 16.0
+      },
+      "description": "Grade 'D' (GP 1.0) and class size 16 (quorum met).",
+      "expected_handbook": "Approved to repeat (Sec 1.17.1); high CGPA recovery potential.",
+      "crisp_outputs": {
+        "Repeat_Permission_Index": 84.16,
+        "CGPA_Improvement_Impact": 86.26
+      },
+      "linguistic_labels": {
+        "Repeat_Permission_Index": "Approved_Permitted",
+        "CGPA_Improvement_Impact": "Maximum_Recovery"
+      },
+      "fired_rules_count": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_REP_02",
+      "domain": "Course Repeat (1.17)",
+      "type": "Normal",
+      "inputs": {
+        "Earned_Course_GPA": 2.33,
+        "Cohort_Enrolled_Size": 14.0
+      },
+      "description": "Grade 'C+' (GP 2.33) and class size 14.",
+      "expected_handbook": "Approved to repeat (Grade <= 2.5 and quorum >= 10 satisfied).",
+      "crisp_outputs": {
+        "Repeat_Permission_Index": 84.31,
+        "CGPA_Improvement_Impact": 52.92
+      },
+      "linguistic_labels": {
+        "Repeat_Permission_Index": "Approved_Permitted",
+        "CGPA_Improvement_Impact": "Moderate_Gain"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_REP_03",
+      "domain": "Course Repeat (1.17)",
+      "type": "Normal",
+      "inputs": {
+        "Earned_Course_GPA": 3.0,
+        "Cohort_Enrolled_Size": 20.0
+      },
+      "description": "Grade 'B' (GP 3.0) and class size 20.",
+      "expected_handbook": "Denied; cannot repeat grade above C+ (2.5 GP) under Sec 1.17.1.",
+      "crisp_outputs": {
+        "Repeat_Permission_Index": 11.61,
+        "CGPA_Improvement_Impact": 14.04
+      },
+      "linguistic_labels": {
+        "Repeat_Permission_Index": "Denied_Ineligible",
+        "CGPA_Improvement_Impact": "Minimal_Gain"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_REP_04",
+      "domain": "Course Repeat (1.17)",
+      "type": "Normal (Quorum Deficit)",
+      "inputs": {
+        "Earned_Course_GPA": 1.33,
+        "Cohort_Enrolled_Size": 5.0
+      },
+      "description": "Grade 'D+' (GP 1.33) but class size is only 5 (< 10 quorum).",
+      "expected_handbook": "Conditional / Pending; eligible grade but under-enrolled under Sec 1.17.2.",
+      "crisp_outputs": {
+        "Repeat_Permission_Index": 48.08,
+        "CGPA_Improvement_Impact": 86.93
+      },
+      "linguistic_labels": {
+        "Repeat_Permission_Index": "Conditional_Quorum_Pending",
+        "CGPA_Improvement_Impact": "Maximum_Recovery"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_REP_05",
+      "domain": "Course Repeat (1.17)",
+      "type": "Boundary",
+      "inputs": {
+        "Earned_Course_GPA": 2.5,
+        "Cohort_Enrolled_Size": 12.0
+      },
+      "description": "Exact Grade Point threshold boundary: GP = 2.50 (C+ cap).",
+      "expected_handbook": "Eligible to repeat (Sec 1.17.1 specifies 'C+ or less').",
+      "crisp_outputs": {
+        "Repeat_Permission_Index": 50.19,
+        "CGPA_Improvement_Impact": 53.23
+      },
+      "linguistic_labels": {
+        "Repeat_Permission_Index": "Conditional_Quorum_Pending",
+        "CGPA_Improvement_Impact": "Moderate_Gain"
+      },
+      "fired_rules_count": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_REP_06",
+      "domain": "Course Repeat (1.17)",
+      "type": "Boundary",
+      "inputs": {
+        "Earned_Course_GPA": 2.55,
+        "Cohort_Enrolled_Size": 12.0
+      },
+      "description": "Just above Grade Point threshold: GP = 2.55.",
+      "expected_handbook": "Ineligible / Denied (exceeds 2.5 C+ cap).",
+      "crisp_outputs": {
+        "Repeat_Permission_Index": 48.26,
+        "CGPA_Improvement_Impact": 53.26
+      },
+      "linguistic_labels": {
+        "Repeat_Permission_Index": "Conditional_Quorum_Pending",
+        "CGPA_Improvement_Impact": "Moderate_Gain"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_REP_07",
+      "domain": "Course Repeat (1.17)",
+      "type": "Boundary",
+      "inputs": {
+        "Earned_Course_GPA": 1.7,
+        "Cohort_Enrolled_Size": 10.0
+      },
+      "description": "Exact Class Size Quorum threshold: Size = 10 students.",
+      "expected_handbook": "Approved to run; minimum class strength of 10 met exactly (Sec 1.17.2).",
+      "crisp_outputs": {
+        "Repeat_Permission_Index": 84.35,
+        "CGPA_Improvement_Impact": 52.93
+      },
+      "linguistic_labels": {
+        "Repeat_Permission_Index": "Approved_Permitted",
+        "CGPA_Improvement_Impact": "Moderate_Gain"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_REP_08",
+      "domain": "Course Repeat (1.17)",
+      "type": "Boundary",
+      "inputs": {
+        "Earned_Course_GPA": 1.7,
+        "Cohort_Enrolled_Size": 9.0
+      },
+      "description": "Class size just below quorum: Size = 9 students.",
+      "expected_handbook": "Conditional; fails minimum 10 students quorum.",
+      "crisp_outputs": {
+        "Repeat_Permission_Index": 56.69,
+        "CGPA_Improvement_Impact": 52.67
+      },
+      "linguistic_labels": {
+        "Repeat_Permission_Index": "Conditional_Quorum_Pending",
+        "CGPA_Improvement_Impact": "Moderate_Gain"
+      },
+      "fired_rules_count": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_REP_09",
+      "domain": "Course Repeat (1.17)",
+      "type": "Invalid / Out-of-Range",
+      "inputs": {
+        "Earned_Course_GPA": 4.8,
+        "Cohort_Enrolled_Size": 15.0
+      },
+      "description": "Grade point exceeding maximum (4.80 GP).",
+      "expected_handbook": "Invalid grade; clamp to 4.0 and Deny repeat.",
+      "crisp_outputs": {
+        "Repeat_Permission_Index": 11.61,
+        "CGPA_Improvement_Impact": 14.04
+      },
+      "linguistic_labels": {
+        "Repeat_Permission_Index": "Denied_Ineligible",
+        "CGPA_Improvement_Impact": "Minimal_Gain"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_PRB_01",
+      "domain": "Probation/Drop (5.5)",
+      "type": "Normal",
+      "inputs": {
+        "CGPA_Margin": 0.8,
+        "Consecutive_Probations": 0.0
+      },
+      "description": "BS Student with CGPA 2.80 (Margin +0.80) and 0 probations.",
+      "expected_handbook": "Good standing; Unrestricted registration.",
+      "crisp_outputs": {
+        "Academic_Risk_Severity": 12.35,
+        "Registration_Action_Advisory": 90.09
+      },
+      "linguistic_labels": {
+        "Academic_Risk_Severity": "Good_Standing",
+        "Registration_Action_Advisory": "Unrestricted_Registration"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_PRB_02",
+      "domain": "Probation/Drop (5.5)",
+      "type": "Normal",
+      "inputs": {
+        "CGPA_Margin": -0.4,
+        "Consecutive_Probations": 0.0
+      },
+      "description": "BS Student with CGPA 1.60 (Margin -0.40) on 0 previous probations.",
+      "expected_handbook": "Placed on 1st Probation; Formal warning letter by HoD (Sec 5.5.1, 5.5.2).",
+      "crisp_outputs": {
+        "Academic_Risk_Severity": 68.06,
+        "Registration_Action_Advisory": 68.06
+      },
+      "linguistic_labels": {
+        "Academic_Risk_Severity": "Probation_Alert",
+        "Registration_Action_Advisory": "Academic_Counseling_Required"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_PRB_03",
+      "domain": "Probation/Drop (5.5)",
+      "type": "Normal",
+      "inputs": {
+        "CGPA_Margin": -0.25,
+        "Consecutive_Probations": 1.0
+      },
+      "description": "Student on 1st probation fails to reach minimum (Margin -0.25).",
+      "expected_handbook": "Placed on 2nd consecutive Probation; Principal approval required to register (Sec 5.5.5).",
+      "crisp_outputs": {
+        "Academic_Risk_Severity": 71.62,
+        "Registration_Action_Advisory": 61.59
+      },
+      "linguistic_labels": {
+        "Academic_Risk_Severity": "Probation_Alert",
+        "Registration_Action_Advisory": "Academic_Counseling_Required"
+      },
+      "fired_rules_count": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_PRB_04",
+      "domain": "Probation/Drop (5.5)",
+      "type": "Normal",
+      "inputs": {
+        "CGPA_Margin": -0.3,
+        "Consecutive_Probations": 2.0
+      },
+      "description": "Student fails to reach minimum CGPA after 2 consecutive probations.",
+      "expected_handbook": "MANDATORY DROP from academic programme (Sec 5.5.3); Registration barred.",
+      "crisp_outputs": {
+        "Academic_Risk_Severity": 88.46,
+        "Registration_Action_Advisory": 29.73
+      },
+      "linguistic_labels": {
+        "Academic_Risk_Severity": "Severe_Drop_Threat",
+        "Registration_Action_Advisory": "Principal_Approval_Mandatory"
+      },
+      "fired_rules_count": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_PRB_05",
+      "domain": "Probation/Drop (5.5)",
+      "type": "Normal (Reset Rule)",
+      "inputs": {
+        "CGPA_Margin": 0.15,
+        "Consecutive_Probations": 1.0
+      },
+      "description": "Student on probation improves CGPA above minimum (Margin +0.15).",
+      "expected_handbook": "Probation count RESET TO ZERO (Sec 5.5.4); Good standing restored.",
+      "crisp_outputs": {
+        "Academic_Risk_Severity": 13.11,
+        "Registration_Action_Advisory": 89.37
+      },
+      "linguistic_labels": {
+        "Academic_Risk_Severity": "Good_Standing",
+        "Registration_Action_Advisory": "Unrestricted_Registration"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_PRB_06",
+      "domain": "Probation/Drop (5.5)",
+      "type": "Boundary",
+      "inputs": {
+        "CGPA_Margin": 0.0,
+        "Consecutive_Probations": 1.0
+      },
+      "description": "Exact threshold boundary: CGPA Margin = 0.00 (CGPA exactly equals minimum).",
+      "expected_handbook": "Satisfies minimum; resets probation count to zero under Sec 5.5.4.",
+      "crisp_outputs": {
+        "Academic_Risk_Severity": 59.63,
+        "Registration_Action_Advisory": 69.8
+      },
+      "linguistic_labels": {
+        "Academic_Risk_Severity": "Probation_Alert",
+        "Registration_Action_Advisory": "Academic_Counseling_Required"
+      },
+      "fired_rules_count": 2,
+      "status": "FAIL"
+    },
+    {
+      "id": "TC_PRB_07",
+      "domain": "Probation/Drop (5.5)",
+      "type": "Boundary",
+      "inputs": {
+        "CGPA_Margin": -0.02,
+        "Consecutive_Probations": 0.0
+      },
+      "description": "Just below threshold: Margin = -0.02 (e.g. BS CGPA 1.98).",
+      "expected_handbook": "Falls below minimum; placed on probation under Sec 5.5.1.",
+      "crisp_outputs": {
+        "Academic_Risk_Severity": 40.0,
+        "Registration_Action_Advisory": 67.89
+      },
+      "linguistic_labels": {
+        "Academic_Risk_Severity": "Advisory_Warning",
+        "Registration_Action_Advisory": "Academic_Counseling_Required"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_PRB_08",
+      "domain": "Probation/Drop (5.5)",
+      "type": "Boundary",
+      "inputs": {
+        "CGPA_Margin": 0.02,
+        "Consecutive_Probations": 0.0
+      },
+      "description": "Just above threshold: Margin = +0.02 (e.g. BS CGPA 2.02).",
+      "expected_handbook": "Meets minimum; good academic standing.",
+      "crisp_outputs": {
+        "Academic_Risk_Severity": 14.59,
+        "Registration_Action_Advisory": 87.91
+      },
+      "linguistic_labels": {
+        "Academic_Risk_Severity": "Good_Standing",
+        "Registration_Action_Advisory": "Unrestricted_Registration"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "TC_PRB_09",
+      "domain": "Probation/Drop (5.5)",
+      "type": "Invalid / Out-of-Range",
+      "inputs": {
+        "CGPA_Margin": -3.5,
+        "Consecutive_Probations": 0.0
+      },
+      "description": "Extreme negative CGPA deficit (-3.5).",
+      "expected_handbook": "Clamp to -2.0; triggers high risk / probation alert.",
+      "crisp_outputs": {
+        "Academic_Risk_Severity": 68.33,
+        "Registration_Action_Advisory": 68.33
+      },
+      "linguistic_labels": {
+        "Academic_Risk_Severity": "Probation_Alert",
+        "Registration_Action_Advisory": "Academic_Counseling_Required"
+      },
+      "fired_rules_count": 1,
+      "status": "PASS"
+    }
+  ]
+}
